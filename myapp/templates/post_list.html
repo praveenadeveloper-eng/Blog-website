@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+
+    <div class="filter-bar mb-5" style="border:1px solid var(--line); padding:20px; border-radius:10px;">
+
+        <form method="GET">
+
+            <div class="row g-3 align-items-end">
+
+                <div class="col-md-4">
+                    <label class="form-label">Search</label>
+
+                    <input type="text" name="q" class="form-control" placeholder="Search articles..."
+                        value="{{ request.GET.search }}">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Category</label>
+
+                    <select name="category" class="form-select">
+
+                        <option value="">All Categories</option>
+
+                        {% for cat in categories %}
+
+                        <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %} selected {% endif %}>
+                            {{ cat.name }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Sort</label>
+
+                    <select name="sort" class="form-select">
+
+                        <option value="">All Posts</option>
+
+                        <option value="recent" {% if request.GET.sort == 'recent' %} selected {% endif %}>
+                            Recent Posts
+                        </option>
+
+                        <option value="old" {% if request.GET.sort == 'old' %} selected {% endif %}>
+                            Old Posts
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-dark w-100">
+                        Filter
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<div class="container py-5">
+  <div class="row g-4">
+
+    {% for post in posts %}
+
+    <div class="col-12 col-sm-6 col-lg-3">
+
+        <div class="card h-100 border-0 shadow-sm article-card">
+
+            <img src="{{ post.image.url }}"
+                 class="card-img-top product-image"
+                 alt="{{ post.name }}">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    {{ post.category.name|truncatechars:10 }}
+                </small>
+
+                <h5 class="card-title mt-2">
+                    {{ post.name|truncatechars:30 }}
+                </h5>
+
+                <p class="card-text text-muted">
+                    {{ post.short_description }}
+                </p>
+
+                <a href="#" class="btn btn-dark btn-sm mt-2">
+                    View Article
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+</div>
+
+{% endblock %}

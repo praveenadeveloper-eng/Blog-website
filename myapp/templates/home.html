@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="row g-5">
+
+    <div class="col-lg-3">
+      <div class="category-filter" style="position:sticky; top:30px;">
+        <div class="eyebrow">Categories</div>
+
+        <h3 style="font-family:var(--serif); margin:8px 0 20px;">
+          Explore topics
+        </h3>
+
+        <div class="d-flex flex-column gap-2">
+          {% for cat in categorys %}
+          <a href="?category={{ cat.slug }}" class="category-pill text-decoration-none">
+            {{ cat.name }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+
+      {% for post in posts %}
+
+      <article class="post-feature reveal mb-5"
+        style="border:1px solid var(--line); padding:24px; border-radius:12px; background:#fff;">
+
+        {% if post.image %}
+        <div style="overflow:hidden; border:1px solid var(--line); border-radius:8px; margin-bottom:22px;">
+          <img src="{{ post.image.url }}" alt="{{ post.name }}" class="img-fluid w-100"
+            style="width:100%; height:auto; display:block;">
+        </div>
+        {% else %}
+        <img src="{% static 'images/default-post.jpg' %}" alt="{{ post.name }}" class="img-fluid w-100"
+          style="width:100%; height:auto; display:block;">
+        {% endif %}
+
+        <div class="eyebrow">
+          {{ post.category.name }}
+        </div>
+
+        <h3 style="font-family:var(--serif); font-size:30px; margin:8px 0 12px;">
+          <a href="{{ post.get_absolute_url }}" style="text-decoration:none;">
+            {{ post.name }}
+          </a>
+        </h3>
+
+        <p style="font-size:18px; line-height:1.7; margin-bottom:12px;">
+          {{ post.short_description }}
+        </p>
+
+        <p style="line-height:1.8; color:#666;">
+          {{ post.description }}
+        </p>
+
+        <div class="meta-line" style="margin-top:20px; padding-top:15px; border-top:1px solid var(--line);">
+          <span>{{ post.created_at|date:"M d, Y" }}</span>
+          <span class="sep"></span>
+          <span>6 min read</span>
+        </div>
+
+      </article>
+
+      {% empty %}
+
+      <div class="text-center py-5">
+        <h3>No articles found.</h3>
+        <p>There are no articles available right now.</p>
+      </div>
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
