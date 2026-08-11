@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <span>BlogAdmin</span>
+        </div>
+
+        <div class="sidebar-label">MAIN</div>
+
+        <nav class="nav flex-column gap-1">
+
+            <a href="{% url 'dashboard:dashboard' %}"
+               class="nav-link active">
+                <i class="fa-solid fa-grid-2"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Articles</span>
+            </a>
+
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-folder"></i>
+                <span>Categories</span>
+            </a>
+
+            <a href="#" class="nav-link">
+                <i class="fa-regular fa-comments"></i>
+                <span>Comments</span>
+            </a>
+
+            <div class="sidebar-label mt-4">MANAGEMENT</div>
+
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <span>Users</span>
+            </a>
+
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="#" class="nav-link">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="main-area">
+
+        <header class="topbar">
+
+            <div>
+                <h5 class="mb-1 fw-bold">Dashboard</h5>
+                <small class="text-secondary">
+                    Welcome back, {{ request.user.username|default:"Admin" }}
+                </small>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button class="icon-button">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="vr"></div>
+
+                <div class="user-profile">
+                    <div class="avatar">
+                        {{ request.user.username|first|upper|default:"A" }}
+                    </div>
+
+                    <div class="d-none d-md-block">
+                        <div class="fw-semibold small">
+                            {{ request.user.username|default:"Admin" }}
+                        </div>
+                        <small class="text-secondary">Administrator</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+        <main class="content">
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -25,7 +25,7 @@
 
                         {% for cat in categories %}
 
-                        <option value="{{ cat.slug }}" {% if request.GET.category==cat.slug %} selected {% endif %}>
+                        <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %} selected {% endif %}>
                             {{ cat.name }}
                         </option>
 
@@ -41,11 +41,11 @@
 
                         <option value="">All Posts</option>
 
-                        <option value="recent" {% if request.GET.sort=='recent' %} selected {% endif %}>
+                        <option value="recent" {% if request.GET.sort == 'recent' %} selected {% endif %}>
                             Recent Posts
                         </option>
 
-                        <option value="old" {% if request.GET.sort=='old' %} selected {% endif %}>
+                        <option value="old" {% if request.GET.sort == 'old' %} selected {% endif %}>
                             Old Posts
                         </option>
 

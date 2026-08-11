@@ -1,0 +1,152 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ article.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<div class="row justify-content-center">
+
+    <div class="col-xl-9 col-lg-10">
+
+        <div class="mb-4">
+            <a href="javascript:history.back()"
+               class="text-decoration-none text-secondary">
+                <i class="fa-solid fa-arrow-left me-2"></i>
+                Back to Articles
+            </a>
+        </div>
+
+        <article>
+
+            <div class="mb-4">
+
+                <span class="badge bg-dark rounded-pill px-3 py-2 mb-3">
+                    {{ post.name }}
+                </span>
+
+                <h1 class="display-4 fw-bold mb-3">
+                    {{ post.category.name }}
+                </h1>
+
+                <p class="lead text-secondary">
+                    {{ post.short_description }}
+                </p>
+                <p class="lead text-secondary">
+                    {{ post.description }}
+                </p>
+
+                <div class="d-flex align-items-center mt-4">
+
+                    <div class="rounded-circle bg-dark text-white
+                                d-flex align-items-center justify-content-center"
+                         style="width:48px;height:48px;">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="ms-3">
+
+                        <div class="fw-semibold">
+                            {{ post.author.username }}
+                        </div>
+
+                        <div class="text-secondary small">
+                            {{ post.created_at|date:"M d, Y" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% if post.image %}
+
+            <div class="mb-5">
+
+                <img src="{{ post.image.url }}"
+                     class="img-fluid w-100 rounded-4"
+                     alt="{{ article.name }}">
+
+            </div>
+
+            {% endif %}
+
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <div class="blog-content">
+
+                        {{ post.blogbody|linebreaks }}
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card border-0 shadow-sm rounded-4 p-4">
+
+                        <h5 class="fw-bold mb-3">
+                            Article Information
+                        </h5>
+
+                        <div class="mb-3">
+
+                            <small class="text-secondary d-block">
+                                Category
+                            </small>
+
+                            <strong>
+                                {{ post.category.name }}
+                            </strong>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <small class="text-secondary d-block">
+                                Auth
+                            </small>
+
+                            <strong>
+                                {{ post.author.username }}
+                            </strong>
+
+                        </div>
+
+                        <div>
+
+                            <small class="text-secondary d-block">
+                                Published
+                            </small>
+
+                            <strong>
+                                {{ post.created_at|date:"M d, Y" }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+       
+
+       
+        </article>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

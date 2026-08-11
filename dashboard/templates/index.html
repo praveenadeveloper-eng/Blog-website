@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid px-0">
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">Overview</h2>
+            <p class="text-secondary mb-0">
+                Here's what's happening with your blog today.
+            </p>
+        </div>
+
+        <a href="#" class="btn btn-dark px-4">
+            <i class="fa-solid fa-plus me-2"></i>
+            New Article
+        </a>
+
+    </div>
+
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="stat-label">Total Articles</p>
+                        <h3 class="stat-number">24</h3>
+
+                        <small class="stat-growth">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            12% this month
+                        </small>
+                    </div>
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="stat-label">Published</p>
+                        <h3 class="stat-number">19</h3>
+
+                        <small class="stat-growth">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            8% this month
+                        </small>
+                    </div>
+
+                    <div class="stat-icon success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="stat-label">Drafts</p>
+                        <h3 class="stat-number">5</h3>
+
+                        <small class="text-secondary">
+                            Waiting for review
+                        </small>
+                    </div>
+
+                    <div class="stat-icon warning">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="stat-card">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+                        <p class="stat-label">Comments</p>
+                        <h3 class="stat-number">86</h3>
+
+                        <small class="stat-growth">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            18% this month
+                        </small>
+                    </div>
+
+                    <div class="stat-icon purple">
+                        <i class="fa-regular fa-comments"></i>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-12">
+
+            <div class="dashboard-card w-100">
+
+                <div class="card-header-custom">
+
+                    <div>
+                        <h5 class="fw-bold mb-1">Recent Articles</h5>
+
+                        <small class="text-secondary">
+                            Your latest published and draft articles
+                        </small>
+                    </div>
+
+                    <a href="#" class="btn btn-sm btn-light">
+                        View all
+                    </a>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table modern-table align-middle mb-0 w-100">
+
+                        <thead>
+                            <tr>
+                                <th>Article</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for post in posts %}
+
+                            <tr>
+
+                                <td>
+                                    <div class="article-title">
+                                        {{ post.name }}
+                                    </div>
+
+                                    <small class="text-secondary">
+
+                                    </small>
+                                </td>
+
+                                <td>
+                                    <span class="category-badge">
+                                        {{ post.category.name }}
+                                    </span>
+                                </td>
+
+                                <td>
+
+                                    {% if post.is_active %}
+
+                                    <span class="status published">
+                                        Published
+                                    </span>
+
+                                    {% else %}
+
+                                    <span class="status draft">
+                                        Inactive
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td class="text-secondary">
+                                    {{ post.created_at|date:"M d, Y" }}
+                                </td>
+
+                                <td>
+                                    <div class="article-actions">
+
+                                        <a href="{% url 'dashboard:article_detail' post.slug %}"
+                                            class="action-btn view-btn" title="View">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+
+                                        <a href="#" class="action-btn edit-btn" title="Edit">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+
+                                        <button type="button" class="action-btn delete-btn" title="Delete">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            {% empty %}
+
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-secondary">
+                                    No articles found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-lg-7">
+
+            <div class="dashboard-card">
+
+                <div class="card-header-custom">
+                    <div>
+                        <h5 class="fw-bold mb-1">Latest Comments</h5>
+                        <small class="text-secondary">
+                            Recent activity from your readers
+                        </small>
+                    </div>
+                </div>
+
+
+                <div class="comment-item">
+
+                    <div class="comment-avatar">
+                        A
+                    </div>
+
+                    <div class="flex-grow-1">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+                                <strong>Arun</strong>
+                                <span class="text-secondary">
+                                    commented on
+                                </span>
+                                <strong>Django CRUD</strong>
+                            </div>
+
+                            <small class="text-secondary">
+                                10m ago
+                            </small>
+
+                        </div>
+
+                        <p class="text-secondary mb-0 mt-1">
+                            Great explanation! This helped me understand CRUD.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="comment-item">
+
+                    <div class="comment-avatar">
+                        K
+                    </div>
+
+                    <div class="flex-grow-1">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+                                <strong>Kumar</strong>
+                                <span class="text-secondary">
+                                    commented on
+                                </span>
+                                <strong>Python OOP</strong>
+                            </div>
+
+                            <small class="text-secondary">
+                                35m ago
+                            </small>
+
+                        </div>
+
+                        <p class="text-secondary mb-0 mt-1">
+                            Very useful article. Keep posting!
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-5">
+
+            <div class="dashboard-card">
+
+                <div class="card-header-custom">
+
+                    <div>
+                        <h5 class="fw-bold mb-1">Quick Actions</h5>
+                        <small class="text-secondary">
+                            Manage your blog
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+                    <a href="#" class="quick-action">
+                        <div class="quick-icon">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+
+                        <div>
+                            <strong>Create Article</strong>
+                            <small>Create a new blog post</small>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-right ms-auto"></i>
+                    </a>
+
+
+                    <a href="#" class="quick-action">
+                        <div class="quick-icon">
+                            <i class="fa-solid fa-folder-plus"></i>
+                        </div>
+
+                        <div>
+                            <strong>Add Category</strong>
+                            <small>Organize your articles</small>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-right ms-auto"></i>
+                    </a>
+
+
+                    <a href="#" class="quick-action">
+                        <div class="quick-icon">
+                            <i class="fa-regular fa-comments"></i>
+                        </div>
+
+                        <div>
+                            <strong>Review Comments</strong>
+                            <small>Manage reader comments</small>
+                        </div>
+
+                        <i class="fa-solid fa-chevron-right ms-auto"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
