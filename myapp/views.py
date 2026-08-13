@@ -14,7 +14,7 @@ def article_detail(request, slug):
 def post_list(request):
     search=request.GET.get('q')
     sort=request.GET.get('sort')
-    post=Article.objects.filter(is_active=True)
+    post=Article.objects.filter(status=True)
     category_slug = request.GET.get('category')
     categories=Category.objects.filter(is_active=True)
     if category_slug:

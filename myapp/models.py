@@ -28,11 +28,16 @@ class Category(models.Model):
         return reverse('myapp:category_detail',args=[self.slug])
 
 class Article(models.Model):
+    STATUS_CHOICES=(
+        ('draft','Draft'),
+        ('published','Published'),
+    )
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name='articles')
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, max_length=200, blank=True)
     short_description = models.CharField(max_length=300)
     description = models.TextField()
+    status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='draft')
     image = models.ImageField(upload_to='articles/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

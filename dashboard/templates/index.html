@@ -15,7 +15,7 @@
             </p>
         </div>
 
-        <a href="#" class="btn btn-dark px-4">
+        <a href="{% url 'dashboard:add_article' %}" class="btn btn-dark px-4">
             <i class="fa-solid fa-plus me-2"></i>
             New Article
         </a>
@@ -183,23 +183,19 @@
                                     </span>
                                 </td>
 
+
                                 <td>
-
-                                    {% if post.is_active %}
-
+                                    {% if post.status == 'published' %}
                                     <span class="status published">
                                         Published
                                     </span>
-
                                     {% else %}
-
                                     <span class="status draft">
-                                        Inactive
+                                        Draft
                                     </span>
-
                                     {% endif %}
-
                                 </td>
+
 
                                 <td class="text-secondary">
                                     {{ post.created_at|date:"M d, Y" }}
@@ -213,13 +209,18 @@
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
 
-                                        <a href="#" class="action-btn edit-btn" title="Edit">
+                                        <a href="{% url 'dashboard:edit_article' post.slug %}"
+                                            class="action-btn edit-btn" title="Edit">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
+                                        <form method="POST" action="{% url 'dashboard:delete_article' post.slug %}"
+                                            style="display: inline;">
+                                            {% csrf_token %}
 
-                                        <button type="button" class="action-btn delete-btn" title="Delete">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
+                                            <button type="submit" class="action-btn delete-btn" title="Delete">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
 
                                     </div>
                                 </td>
