@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -34,6 +35,7 @@ class Article(models.Model):
     )
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name='articles')
     name = models.CharField(max_length=200)
+    author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='articles',null=True,blank=True)
     slug = models.SlugField(unique=True, max_length=200, blank=True)
     short_description = models.CharField(max_length=300)
     description = models.TextField()

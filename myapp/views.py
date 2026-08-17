@@ -1,11 +1,14 @@
 from django.shortcuts import render,get_object_or_404
 from .models import Category,Article
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     post=Article.objects.filter(is_active=True)[:8]
     category=Category.objects.filter(is_active=True)[:8]
     return render(request,'home.html',{'posts':post,'categorys':category})
+
+@login_required
 def article_detail(request, slug):
     post=get_object_or_404(Article,slug=slug,is_active=True)
     related=Article.objects.filter(category=post.category,is_active=True).exclude(id=post.id)[:4]

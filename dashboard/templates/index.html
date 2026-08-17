@@ -208,11 +208,13 @@
                                             class="action-btn view-btn" title="View">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
-
+                                        {% if post.author == request.user or perms.myapp.change_article %}
                                         <a href="{% url 'dashboard:edit_article' post.slug %}"
                                             class="action-btn edit-btn" title="Edit">
                                             <i class="fa-solid fa-pen-to-square"></i>
+                                        {% endif %}
                                         </a>
+                                        {% if post.author == request.user or perms.myapp.delete_article %}
                                         <form method="POST" action="{% url 'dashboard:delete_article' post.slug %}"
                                             style="display: inline;">
                                             {% csrf_token %}
@@ -221,6 +223,7 @@
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </form>
+                                        {% endif %}
 
                                     </div>
                                 </td>
