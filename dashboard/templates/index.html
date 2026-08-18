@@ -14,11 +14,12 @@
                 Here's what's happening with your blog today.
             </p>
         </div>
-
+        {% if perms.myapp.add_article %}
         <a href="{% url 'dashboard:add_article' %}" class="btn btn-dark px-4">
             <i class="fa-solid fa-plus me-2"></i>
             New Article
         </a>
+        {% endif %}
 
     </div>
 
@@ -141,7 +142,7 @@
                         </small>
                     </div>
 
-                    <a href="#" class="btn btn-sm btn-light">
+                    <a href="{% url 'myapp:post_list' %}" class="btn btn-sm btn-light">
                         View all
                     </a>
 
@@ -212,8 +213,9 @@
                                         <a href="{% url 'dashboard:edit_article' post.slug %}"
                                             class="action-btn edit-btn" title="Edit">
                                             <i class="fa-solid fa-pen-to-square"></i>
-                                        {% endif %}
+                                        
                                         </a>
+                                        {% endif %}
                                         {% if post.author == request.user or perms.myapp.delete_article %}
                                         <form method="POST" action="{% url 'dashboard:delete_article' post.slug %}"
                                             style="display: inline;">
